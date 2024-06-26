@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
 public class ScriptCreator : EditorWindow
@@ -8,8 +9,8 @@ public class ScriptCreator : EditorWindow
     private string _pathCreate;
 
 
-    [MenuItem("Tools/ScritsCreate")]
-    private static void CreateScripts() => GetWindow<ScriptCreator>("ScreptCreator");
+    [Shortcut("CustomEditor/ScreepCreate", KeyCode.N)]
+    private static void CreateScripts() => GetWindow<ScriptCreator>("ScriptCreator");
 
 
     public void OnGUI()
