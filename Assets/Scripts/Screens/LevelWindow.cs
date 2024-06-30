@@ -1,4 +1,4 @@
-public class LevelWindow : BaseScreen
+public class LevelWindow : BaseScreen.BaseScreen
 {
     
 }

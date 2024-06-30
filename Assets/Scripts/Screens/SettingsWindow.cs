@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SettingsWindow : BaseScreen
+public class SettingsWindow : BaseScreen.BaseScreen
 {
     
 }

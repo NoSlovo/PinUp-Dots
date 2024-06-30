@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StoreWindow : BaseScreen
+public class StoreWindow : BaseScreen.BaseScreen
 {
     
 }
