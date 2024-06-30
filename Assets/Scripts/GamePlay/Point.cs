@@ -1,8 +1,28 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Point : MonoBehaviour
+namespace GamePlay
 {
-    [SerializeField] private RectTransform _rectTransform;
+    public class Point : MonoBehaviour
+    {
+        [SerializeField] private RectTransform _rectTransform;
+        [SerializeField] private Button _button;
+        [SerializeField] private Sprite _spriteActive;
+        [SerializeField] private Image _image;
 
-    public RectTransform RectTransform => _rectTransform;
+        private int _id;
+        private bool _isActive = false;
+        public event Action<RectTransform, bool> OnСorrectButtonPressed;
+        public event Action<RectTransform> OnWrongButtonPressed;
+
+        private void Start() => _button.onClick.AddListener(ClickInvoke);
+
+        private void ClickInvoke()
+        {
+            _image.sprite = _spriteActive;
+            OnСorrectButtonPressed?.Invoke(_rectTransform,_isActive);
+            OnWrongButtonPressed?.Invoke(_rectTransform);
+        }
+    }
 }

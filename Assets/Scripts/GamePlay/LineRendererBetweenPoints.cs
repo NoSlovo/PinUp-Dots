@@ -1,53 +1,64 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class LineRendererBetweenPoints : MonoBehaviour
+namespace GamePlay
 {
-    [SerializeField] private Camera _mainCamera;
-    [SerializeField] private LineRenderer _lineRenderer;
-    [SerializeField] private List<Vector3> _template;
-    [SerializeField] private List<Vector3> _positionsPoints = new();
-    
-    private InputHandler _inputHandler;
-
-
-    private void Awake() => _inputHandler = new InputHandler(_mainCamera);
-
-    private void Update()
+    public class LineRendererBetweenPoints : MonoBehaviour
     {
-        var pointClick = _inputHandler.GetClikcPoint();
+        [SerializeField] private LineRenderer _lineRenderer;
 
-        if (pointClick != Vector3.zero)
+        private int _index = 0;
+        private int _countCurenntButton;
+        private int _maxCurrentButtons = 1;
+        public event Action OnLevelCompleted;
+        
+        public event Action OnClick;
+
+        public void ClickCurrentButton(RectTransform rectTransform, bool IsButtonActive)
         {
-            AddPointClick(pointClick);
-        }
+            var startPosition = _lineRenderer.GetPosition(0);
 
-        if (_template == _positionsPoints)
-        {
-            Debug.Log("Победа");
-        }
-    }
-
-    private void AddPointClick(Vector3 pointClick)
-    {
-        if (_positionsPoints.Count > 0)
-            if (CheckPositions(pointClick))
+            if (rectTransform.position == startPosition && _countCurenntButton == _maxCurrentButtons - 1)
             {
-                Debug.Log("Попали в туже самую точку ");
-                return;
+                _countCurenntButton++;
+            }
+            else if (!IsButtonActive)
+            {
+                _countCurenntButton++;
+                SetPosition(rectTransform);
+                OnClick?.Invoke();
             }
 
-        Debug.Log("Добавили новую точку");
-        _positionsPoints.Add(pointClick);
-        _lineRenderer.positionCount = _positionsPoints.Count;
-        _lineRenderer.SetPosition(_positionsPoints.Count - 1, _positionsPoints[_positionsPoints.Count - 1]);
-    }
+            if (_countCurenntButton == _maxCurrentButtons)
+                OnLevelCompleted?.Invoke();
+        }
 
-    private bool CheckPositions(Vector3 position)
-    {
-        if (position == _positionsPoints[_positionsPoints.Count - 1])
-            return true;
+        public void AddMaxCurrentButtons()
+        {
+            _maxCurrentButtons++;
+        }
 
-        return false;
+        public void ClickNonCorrentButton(RectTransform rectTransform)
+        {
+            _countCurenntButton--;
+            OnClick?.Invoke();
+            SetPosition(rectTransform);
+        }
+
+        public void Clear()
+        {
+            _lineRenderer.positionCount = 0;
+            _index = 0;
+            _maxCurrentButtons = 1;
+            _countCurenntButton = 0;
+        }
+
+
+        private void SetPosition(RectTransform rectTransform)
+        {
+            _lineRenderer.positionCount++;
+            _lineRenderer.SetPosition(_index, rectTransform.position);
+            _index++;
+        }
     }
 }
