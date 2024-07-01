@@ -132,10 +132,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -5274691324693294426, guid: 708842748f946cc45bc3c743901aadd0, type: 3}
-      propertyPath: _gameWinScreen
-      value: 
-      objectReference: {fileID: 1293742217141365244, guid: 31e8b52ddc35f7b41a024d409895a48d, type: 3}
-    - target: {fileID: -5274691324693294426, guid: 708842748f946cc45bc3c743901aadd0, type: 3}
       propertyPath: _screenManager
       value: 
       objectReference: {fileID: 1037378571}

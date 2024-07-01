@@ -1629,6 +1629,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonBack: {fileID: 6842945432421873541}
+  _configsAchigments: {fileID: 11400000, guid: b3a1a9f682ce8de4ca519a66a258c763, type: 2}
+  _activeAchigment: {fileID: 21300000, guid: b4c5e039ecd12c446ae9a0d6c0c7c966, type: 3}
+  _inactiveAchigment: {fileID: 21300000, guid: 48dfd589d9128ee4a87de1868b4eb50e, type: 3}
+  _achigments:
+  - _imageAchigment: {fileID: 3899428405396701346}
+    _discription: {fileID: 8476790830984170802}
+  - _imageAchigment: {fileID: 5241362564678644801}
+    _discription: {fileID: 1893800560527864736}
+  - _imageAchigment: {fileID: 3955397298243941765}
+    _discription: {fileID: 4837735620242564120}
+  - _imageAchigment: {fileID: 1591222448393920313}
+    _discription: {fileID: 4984953572204965381}
+  - _imageAchigment: {fileID: 2740071408019558665}
+    _discription: {fileID: 1866176287754567468}
 --- !u!1 &7462243377546004331
 GameObject:
   m_ObjectHideFlags: 0
