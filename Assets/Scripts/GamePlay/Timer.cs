@@ -1,45 +1,67 @@
-﻿using TMPro;
+﻿using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GamePlay
 {
     public class Timer : MonoBehaviour
     {
-        public TextMeshProUGUI timerText;
-        public float startTime = 30f; // Начальное время в секундах
+        [SerializeField] private TextMeshProUGUI timerText;
+        [SerializeField] private Image _stars;
+        [Header("Stars")]
+        [SerializeField] private List<Sprite> _starsSprites;
+
+        private int _initStarIndex = 2;
+        private float startTime;
         private float remainingTime;
+        private float interval;
         private bool isRunning;
+        private float _actionTime;
 
-        void Start()
-        {
-            ResetTimer();
-        }
+        public event Action OnEnd;
 
-        void Update()
+        private void Update()
         {
             if (isRunning)
             {
-                remainingTime -= Time.deltaTime;
-                if (remainingTime <= 0)
+                startTime -= Time.deltaTime;
+                if (startTime <= 0)
                 {
-                    remainingTime = 0;
+                    startTime = 0;
                     isRunning = false;
-                    // Можно добавить здесь дополнительное действие по окончанию таймера
-                    // Например, вызвать метод, оповестить игрока и т.д.
+                    OnEnd?.Invoke();
                 }
 
-                UpdateTimerDisplay(remainingTime);
+                UpdateTimerDisplay(startTime);
+                if (startTime <= _actionTime)
+                {
+                    Debug.Log(interval);
+                    RemoveSrar();
+                    _actionTime -= interval;
+                }
             }
         }
 
-        public void StartTimer()
+        public void InitTimer(float time)
         {
+            startTime = time;
             isRunning = true;
+            interval = startTime / 3;
+            _actionTime = startTime - interval;
+            _stars.sprite =_starsSprites[3];
+            Debug.Log(_actionTime);
         }
 
         public void StopTimer()
         {
             isRunning = false;
+        }
+
+        public void ContinueTimer()
+        {
+            isRunning = true;
         }
 
         public void ResetTimer()
@@ -53,7 +75,18 @@ namespace GamePlay
         {
             int minutes = Mathf.FloorToInt(time / 60F);
             int seconds = Mathf.FloorToInt(time % 60F);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timerText.text = $"{minutes}:{seconds}";
+        }
+
+        private void RemoveSrar()
+        {
+            if (_initStarIndex <= 0)
+            {
+                _stars.sprite = _starsSprites[0];
+                return;
+            }
+            _stars.sprite = _starsSprites[_initStarIndex];
+            _initStarIndex --;
         }
     }
 }

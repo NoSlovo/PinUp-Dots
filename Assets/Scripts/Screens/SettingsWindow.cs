@@ -20,10 +20,25 @@ namespace Screens
         private void Awake()
         {
             var value = _settingsData.LoadData();
-            _settingsButton.ImageButtonSound.sprite = value.Item1 ? _imageActive : _imageDisable;
-            _settingsButton.ImageButtonMusic.sprite = value.Item2 ? _imageActive : _imageDisable;
+            SetImageButton(value);
             _activeSound = value.Item2;
             _activeMusic = value.Item1;
+        }
+
+        private void SetImageButton((bool, bool) value)
+        {
+            if (value.Item1)
+                _settingsButton.ImageButtonSound.sprite = _imageActive;
+
+            else
+                _settingsButton.ImageButtonSound.sprite = _imageDisable;
+
+
+            if (value.Item2)
+                _settingsButton.ImageButtonMusic.sprite = _imageActive;
+
+            else
+                _settingsButton.ImageButtonMusic.sprite = _imageDisable;
         }
 
         private void OnEnable()

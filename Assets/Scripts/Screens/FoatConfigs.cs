@@ -8,14 +8,21 @@ namespace Screens
     [CreateAssetMenu(fileName = "FoatConfigs", menuName = "FoatConfigs/Config")]
     public class FoatConfigs : ScriptableObject
     {
-        [SerializeField] public List<LevelData> _configsPrefab;
+        [SerializeField] public List<LevelData> ConfigsPrefab;
 
         public LevelData GetConfigs(int indexConfig)
         {
-            if (indexConfig >= _configsPrefab.Count)
-                return _configsPrefab[_configsPrefab.Count - 1];
-            
-            return _configsPrefab[indexConfig];
+            if (indexConfig >= ConfigsPrefab.Count)
+                return ConfigsPrefab[ConfigsPrefab.Count - 1];
+
+            return ConfigsPrefab[indexConfig];
+        }
+
+        public void SaveResult(int indexConfig, Sprite result)
+        {
+            var levelData = ConfigsPrefab[indexConfig];
+            levelData.Result = result;
+            ConfigsPrefab[indexConfig] = levelData;
         }
     }
 
@@ -25,5 +32,12 @@ namespace Screens
         public int Index;
         public BaseConfig Prefab;
         public Sprite PaternImage;
+        public float Time;
+        public Sprite Result;
+
+        public void SetResult(Sprite result)
+        {
+            Result = result;
+        }
     }
 }

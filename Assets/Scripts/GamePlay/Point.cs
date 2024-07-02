@@ -1,4 +1,5 @@
 using System;
+using Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ namespace GamePlay
         [SerializeField] private Button _button;
         [SerializeField] private Sprite _spriteActive;
         [SerializeField] private Image _image;
+        [SerializeField] private AudioSource _clickSound;
+        [SerializeField] private GameSettings _gameSettings;
 
         private int _id;
         private bool _isActive = false;
@@ -20,8 +23,14 @@ namespace GamePlay
 
         private void ClickInvoke()
         {
+            if (_gameSettings.LoadData().Item1)
+                _clickSound.Play();
+
+            else
+                _clickSound.mute = !_gameSettings.LoadData().Item1;
+
             _image.sprite = _spriteActive;
-            OnСorrectButtonPressed?.Invoke(_rectTransform,_isActive);
+            OnСorrectButtonPressed?.Invoke(_rectTransform, _isActive);
             OnWrongButtonPressed?.Invoke(_rectTransform);
         }
     }

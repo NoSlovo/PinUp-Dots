@@ -1,3 +1,4 @@
+using Configs;
 using Screens;
 using UnityEngine;
 
@@ -11,7 +12,10 @@ public class ScreenManager : MonoBehaviour, IScreenService
 
     private BaseScreen.BaseScreen _activeScreen;
 
-    private void Start() => OpenScreen(_menu);
+    private void Start()
+    {
+        OpenScreen(_menu);
+    }
 
 
     public void OpenScreenMenu() => OpenScreen(_menu);
@@ -29,7 +33,7 @@ public class ScreenManager : MonoBehaviour, IScreenService
         _gameScreen.InitGame();
         _gameScreen.gameObject.SetActive(true);
         _activeScreen.gameObject.SetActive(false);
-    } 
+    }
 
 
     private void OpenScreen(BaseScreen.BaseScreen screen)
